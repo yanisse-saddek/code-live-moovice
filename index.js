@@ -10,7 +10,7 @@ main()
 const movieSchema = new mongoose.Schema({
     overview: String,
     poster_path: String,
-    release_date: String,
+    release_date: Date,
     title: String,
     popular:Boolean
 });
@@ -20,7 +20,20 @@ const movieModel = mongoose.model('movies', movieSchema);
 
 app.get('/movies/popular', (req, res, next)=>{
     movieModel.find({popular:true})
-               .select('overview popular')
+              .then(data=>{
+            res.json(data)
+    })
+})
+
+app.get('/movies/weekly', (req, res, next)=>{
+    const mtn = new Date('2022-04-25')
+    const week = new Date('2022-05-01')
+    movieModel.find({
+        release_date: {
+            $gt:mtn,
+            $lt:week
+        }
+    })
               .then(data=>{
             res.json(data)
     })
