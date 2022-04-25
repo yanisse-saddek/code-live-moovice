@@ -19,7 +19,9 @@ const movieModel = mongoose.model('movies', movieSchema);
 // movieModel.insertMany(movies)
 
 app.get('/movies/popular', (req, res, next)=>{
-    movieModel.find({popular:true}).then(data=>{
+    movieModel.find({popular:true})
+               .select('overview popular')
+              .then(data=>{
             res.json(data)
     })
 })
