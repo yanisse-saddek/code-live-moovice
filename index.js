@@ -35,9 +35,22 @@ app.get('/movies/weekly', (req, res, next)=>{
         }
     })
               .then(data=>{
-            res.json(data)
+                res.json(data)
     })
 })
 
+app.post('/movies', (req, res, next)=>{
+    const moviee = new movieModel({
+        overview: "bidule",
+        poster_path: "plop",
+        release_date: new Date,
+        title: "le film de moi!!!!!!!!!!!!!!!!",
+        popular:true
+    })
+    moviee.save().then(ok=>{
+        console.log(ok)
+        res.send('ok')
+    })
+})
   
 app.listen(3)
